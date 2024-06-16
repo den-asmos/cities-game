@@ -56,7 +56,12 @@ const GamePage = (): JSX.Element => {
 
   const content = (
     <section className="max-w-xl w-full pb-6 flex flex-col justify-center items-center bg-white rounded-2xl shadow prose prose-base">
-      <Countdown heading={heading} />
+      <Countdown
+        heading={heading}
+        turn={turn}
+        citiesCount={cities.length}
+        lastCity={cities[cities.length - 1]}
+      />
 
       {!cities.length ? firstCity : listOfCities}
 

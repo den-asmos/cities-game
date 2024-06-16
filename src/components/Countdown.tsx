@@ -1,16 +1,24 @@
 import { useState, useEffect } from 'react';
 import { formatTime } from '../utils/formatTime';
+import { useNavigate } from 'react-router';
 
 type CountdownProps = {
   heading: string;
   duration?: number;
+  turn: 'you' | 'opponent';
+  citiesCount: number;
+  lastCity: string;
 };
 
 const Countdown = ({
   heading,
-  duration = 120,
+  duration = 10,
+  turn,
+  citiesCount,
+  lastCity,
 }: CountdownProps): JSX.Element => {
   const [secondsLeft, setSecondsLeft] = useState<number>(duration);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (secondsLeft > 0) {
@@ -21,8 +29,10 @@ const Countdown = ({
       return () => {
         clearInterval(interval);
       };
+    } else {
+      navigate('/finish', { state: { turn, citiesCount, lastCity } });
     }
-  }, [secondsLeft, duration]);
+  }, [secondsLeft, duration, turn, citiesCount, lastCity, navigate]);
 
   const width = `${((secondsLeft / duration) * 100).toFixed(0)}%`;
 
