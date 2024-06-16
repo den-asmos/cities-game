@@ -7,6 +7,11 @@ export const validateCity = (
   mentionedCities: string[]
 ): boolean => {
   const capitalizedCity = capitalize(city);
+
+  if (!mentionedCities.length) {
+    return CITIES.includes(capitalizedCity);
+  }
+
   const lastLetter = getLastLetter(mentionedCities);
 
   if (!CITIES.includes(capitalizedCity)) {
