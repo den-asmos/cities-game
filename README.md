@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
+# Cities Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Build with React + TypeScript + Vite
 
-Currently, two official plugins are available:
+<div align='center'>
+  <img width="300" alt="Снимок экрана 2024-06-16 в 19 54 25" src="https://github.com/den-asmos/cities-game/assets/103278084/c2301ec0-099a-4500-94f0-fc543d732341">
+  <img width="300" alt="Снимок экрана 2024-06-16 в 19 48 25" src="https://github.com/den-asmos/cities-game/assets/103278084/6c4a0667-28c3-47f3-8657-9213858696e9">
+  <img width="300" alt="Снимок экрана 2024-06-16 в 19 54 21" src="https://github.com/den-asmos/cities-game/assets/103278084/84061d4f-54bc-433e-b06c-40dca9f2a8a7">
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Setup
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+npm install
+```
+```
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Live version
+
+<a href="https://cities-game.onrender.com">play here</a>
