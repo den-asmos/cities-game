@@ -1,17 +1,19 @@
 import { CITIES } from '../constants/cities';
+import { capitalize } from './capitalize';
+import { getLastLetter } from './getLastLetter';
 
 export const validateCity = (
   city: string,
-  lastLetter: string,
-  availableCities: string[]
+  mentionedCities: string[]
 ): boolean => {
-  const capitalizedCity = city[0].toUpperCase() + city.slice(1).toLowerCase();
+  const capitalizedCity = capitalize(city);
+  const lastLetter = getLastLetter(mentionedCities);
 
   if (!CITIES.includes(capitalizedCity)) {
     return false;
   } else if (capitalizedCity[0] !== lastLetter) {
     return false;
-  } else if (!availableCities.includes(capitalizedCity)) {
+  } else if (mentionedCities.includes(capitalizedCity)) {
     return false;
   }
 
