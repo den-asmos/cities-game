@@ -5,7 +5,7 @@ import GamePage from '../pages/GamePage';
 import WelcomePage from '../pages/WelcomePage';
 import NotFoundPage from '../pages/NotFoundPage';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
@@ -29,5 +29,3 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-export default router;
