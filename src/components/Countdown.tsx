@@ -12,15 +12,19 @@ type CountdownProps = {
 
 const Countdown = ({
   heading,
-  duration = 10,
+  duration = 120,
   turn,
   citiesCount,
   lastCity,
 }: CountdownProps): JSX.Element => {
-  const [secondsLeft, setSecondsLeft] = useState<number>(duration);
   const navigate = useNavigate();
+  const [secondsLeft, setSecondsLeft] = useState<number>(duration);
 
   useEffect(() => {
+    window.onbeforeunload = () => {
+      return '';
+    };
+
     if (secondsLeft > 0) {
       const interval = setTimeout(() => {
         setSecondsLeft((prev) => prev - 1);
@@ -32,9 +36,17 @@ const Countdown = ({
     } else {
       navigate('/finish', { state: { turn, citiesCount, lastCity } });
     }
-  }, [secondsLeft, duration, turn, citiesCount, lastCity, navigate]);
 
-  const width = `${((secondsLeft / duration) * 100).toFixed(0)}%`;
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [secondsLeft, turn, citiesCount, lastCity, navigate]);
+
+  useEffect(() => {
+    setSecondsLeft(120);
+  }, [turn]);
+
+  const width = `${((secondsLeft / 120) * 100).toFixed(0)}%`;
 
   const countdown = (
     <>

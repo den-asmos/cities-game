@@ -5,17 +5,35 @@ import { getLastLetter } from '../utils/getLastLetter';
 import IconButton from '../components/IconButton';
 import Countdown from '../components/Countdown';
 import City from '../components/City';
+import { getRandomAnswerTime } from '../utils/getRandomAnswerTime';
+import { getRandomCity } from '../utils/getRandomCity';
 
 const GamePage = (): JSX.Element => {
   const [cityValue, setCityValue] = useState<string>('');
   const [cities, setCities] = useSessionStorage<string[]>('cities', []);
   const [turn, setTurn] = useSessionStorage<'you' | 'opponent'>('turn', 'you');
 
+  const generateCity = (lastCity: string): void => {
+    const answerTime = getRandomAnswerTime(100, 12100);
+    const city = getRandomCity(cities, lastCity);
+
+    if (city) {
+      setTimeout(() => {
+        setCities((prev) => [...prev, city]);
+        setTurn('you');
+      }, answerTime);
+    } else {
+      setTimeout(() => {}, 12000);
+    }
+  };
+
   const handleAddCity = (): void => {
     if (validateCity(cityValue, cities)) {
       setCityValue('');
-      setCities([...cities, cityValue]);
+      setCities((prev) => [...prev, cityValue]);
       setTurn('opponent');
+
+      generateCity(cityValue);
     }
   };
 
