@@ -28,12 +28,16 @@ const GamePage = (): JSX.Element => {
   };
 
   const handleAddCity = (): void => {
-    if (validateCity(cityValue, cities)) {
+    const { isValid, error } = validateCity(cityValue, cities);
+
+    if (isValid) {
       setCityValue('');
       setCities((prev) => [...prev, cityValue]);
       setTurn('opponent');
 
       generateCity(cityValue);
+    } else {
+      alert(error);
     }
   };
 
@@ -94,7 +98,7 @@ const GamePage = (): JSX.Element => {
 
         <IconButton
           iconName={'send-icon'}
-          disabled={turn === 'opponent'}
+          disabled={turn === 'opponent' || !cityValue}
           onClick={handleAddCity}
         />
       </footer>
