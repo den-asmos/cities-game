@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import TextButton from '../components/TextButton';
 
 type LocationState = {
@@ -8,10 +8,13 @@ type LocationState = {
 };
 
 const FinishPage = (): JSX.Element => {
+  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState;
 
-  const handleStartNewGame = (): void => {};
+  const handleStartNewGame = (): void => {
+    navigate('/');
+  };
 
   const fail = (
     <header>

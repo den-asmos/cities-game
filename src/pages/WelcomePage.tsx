@@ -1,8 +1,17 @@
+import { useSessionStorage } from 'usehooks-ts';
 import { useNavigate } from 'react-router';
 import TextButton from '../components/TextButton';
 
 const WelcomePage = (): JSX.Element => {
   const navigate = useNavigate();
+  const [, , removeCities] = useSessionStorage<string[]>('cities', []);
+  const [, , removeTurn] = useSessionStorage<'you' | 'opponent'>('turn', 'you');
+
+  const handleStartGame = (): void => {
+    removeCities();
+    removeTurn();
+    navigate('game');
+  };
 
   const welcome = (
     <section className="max-w-xl w-full py-6 flex flex-col justify-center items-center bg-white rounded-2xl shadow prose prose-sm">
@@ -28,7 +37,7 @@ const WelcomePage = (): JSX.Element => {
         </ul>
       </div>
 
-      <TextButton title={'Начать игру'} onClick={() => navigate('game')} />
+      <TextButton title={'Начать игру'} onClick={handleStartGame} />
     </section>
   );
 
