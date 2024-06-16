@@ -14,7 +14,7 @@ const GamePage = (): JSX.Element => {
   const [turn, setTurn] = useSessionStorage<'you' | 'opponent'>('turn', 'you');
 
   const generateCity = (lastCity: string): void => {
-    const answerTime = getRandomAnswerTime(100, 12100);
+    const answerTime = getRandomAnswerTime(10000, 121000);
     const city = getRandomCity(cities, lastCity);
 
     if (city) {
@@ -23,7 +23,7 @@ const GamePage = (): JSX.Element => {
         setTurn('you');
       }, answerTime);
     } else {
-      setTimeout(() => {}, 12000);
+      setTimeout(() => {}, 120000);
     }
   };
 
