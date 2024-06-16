@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useSessionStorage } from 'usehooks-ts';
 import { validateCity } from '../utils/validateCity';
 import { getLastLetter } from '../utils/getLastLetter';
@@ -27,7 +27,9 @@ const GamePage = (): JSX.Element => {
     }
   };
 
-  const handleAddCity = (): void => {
+  const handleAddCity = (event: SyntheticEvent): void => {
+    event.preventDefault();
+
     const { isValid, error } = validateCity(cityValue, cities);
 
     if (isValid) {
@@ -87,7 +89,7 @@ const GamePage = (): JSX.Element => {
 
       {!cities.length ? firstCity : listOfCities}
 
-      <footer className="w-full px-6 relative">
+      <form onSubmit={handleAddCity} className="w-full px-6 relative">
         <input
           type="text"
           value={cityValue}
@@ -97,11 +99,11 @@ const GamePage = (): JSX.Element => {
         />
 
         <IconButton
+          type={'submit'}
           iconName={'send-icon'}
           disabled={turn === 'opponent' || !cityValue}
-          onClick={handleAddCity}
         />
-      </footer>
+      </form>
     </section>
   );
 
