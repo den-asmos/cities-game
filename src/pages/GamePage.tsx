@@ -2,20 +2,20 @@ import { SyntheticEvent, useState } from 'react';
 import { useSessionStorage } from 'usehooks-ts';
 import { validateCity } from '../utils/validateCity';
 import { getLastLetter } from '../utils/getLastLetter';
+import { getRandomAnswerTime } from '../utils/getRandomAnswerTime';
+import { getRandomCity } from '../utils/getRandomCity';
 import IconButton from '../components/IconButton';
 import Countdown from '../components/Countdown';
 import City from '../components/City';
-import { getRandomAnswerTime } from '../utils/getRandomAnswerTime';
-import { getRandomCity } from '../utils/getRandomCity';
 
 const GamePage = (): JSX.Element => {
   const [cityValue, setCityValue] = useState<string>('');
   const [cities, setCities] = useSessionStorage<string[]>('cities', []);
   const [turn, setTurn] = useSessionStorage<'you' | 'opponent'>('turn', 'you');
 
-  const generateCity = (lastCity: string): void => {
+  const generateCity = (mentionedCities: string[], lastCity: string): void => {
     const answerTime = getRandomAnswerTime(10000, 121000);
-    const city = getRandomCity(cities, lastCity);
+    const city = getRandomCity(mentionedCities, lastCity);
 
     if (city) {
       setTimeout(() => {
@@ -37,7 +37,7 @@ const GamePage = (): JSX.Element => {
       setCities((prev) => [...prev, cityValue]);
       setTurn('opponent');
 
-      generateCity(cityValue);
+      generateCity([...cities, cityValue], cityValue);
     } else {
       alert(error);
     }
@@ -75,7 +75,7 @@ const GamePage = (): JSX.Element => {
   const placeholder = !cities.length
     ? 'Напишите любой город, например: Где вы живете?'
     : turn === 'you'
-      ? `Знаете город на букву “${getLastLetter(cities)}”?`
+      ? `Знаете город на букву “${getLastLetter(cities.slice(-1)[0])}”?`
       : 'Ожидаем ответа соперника...';
 
   const content = (
@@ -84,7 +84,7 @@ const GamePage = (): JSX.Element => {
         heading={heading}
         turn={turn}
         citiesCount={cities.length}
-        lastCity={cities[cities.length - 1]}
+        lastCity={cities.slice(-1)[0]}
       />
 
       {!cities.length ? firstCity : listOfCities}

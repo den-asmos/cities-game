@@ -1,4 +1,5 @@
 import { CITIES } from '../constants/cities';
+import { getLastLetter } from './getLastLetter';
 
 export const getRandomCity = (
   mentionedCities: string[],
@@ -8,7 +9,7 @@ export const getRandomCity = (
     (city) => !mentionedCities.includes(city)
   );
 
-  const lastLetter = lastCity[lastCity.length - 1].toUpperCase();
+  const lastLetter = getLastLetter(lastCity);
 
   const city = availableCities.find((city) => city[0] === lastLetter);
 

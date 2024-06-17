@@ -21,7 +21,7 @@ export const validateCity = (
     }
   }
 
-  const lastLetter = getLastLetter(mentionedCities);
+  const lastLetter = getLastLetter(mentionedCities.slice(-1)[0]);
 
   if (!CITIES.includes(capitalizedCity)) {
     return { isValid: false, error: 'Такого города нет' };
