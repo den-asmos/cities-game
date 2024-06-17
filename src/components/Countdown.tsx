@@ -1,23 +1,19 @@
 import { useState, useEffect } from 'react';
 import { formatTime } from '../utils/formatTime';
-import { useNavigate } from 'react-router';
 
 type CountdownProps = {
   heading: string;
   duration?: number;
   turn: 'you' | 'opponent';
-  citiesCount: number;
-  lastCity: string;
+  handleFinishGame: () => void;
 };
 
 const Countdown = ({
   heading,
   duration = 120,
   turn,
-  citiesCount,
-  lastCity,
+  handleFinishGame,
 }: CountdownProps): JSX.Element => {
-  const navigate = useNavigate();
   const [secondsLeft, setSecondsLeft] = useState<number>(duration);
 
   useEffect(() => {
@@ -34,13 +30,13 @@ const Countdown = ({
         clearInterval(interval);
       };
     } else {
-      navigate('/finish', { state: { turn, citiesCount, lastCity } });
+      handleFinishGame();
     }
 
     return () => {
       window.onbeforeunload = null;
     };
-  }, [secondsLeft, turn, citiesCount, lastCity, navigate]);
+  }, [secondsLeft, turn, handleFinishGame]);
 
   useEffect(() => {
     setSecondsLeft(120);

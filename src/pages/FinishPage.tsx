@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router';
 import TextButton from '../components/TextButton';
+import { useEffect } from 'react';
 
 type LocationState = {
   turn: 'you' | 'opponent';
@@ -7,10 +8,20 @@ type LocationState = {
   lastCity: string;
 };
 
-const FinishPage = (): JSX.Element => {
+const FinishPage = (): JSX.Element | null => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState;
+
+  useEffect(() => {
+    if (!state) {
+      navigate('/404');
+    }
+  }, [state, navigate]);
+
+  if (!state) {
+    return null;
+  }
 
   const handleStartNewGame = (): void => {
     navigate('/');

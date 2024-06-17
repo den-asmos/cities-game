@@ -7,11 +7,13 @@ import { getRandomCity } from '../utils/getRandomCity';
 import IconButton from '../components/IconButton';
 import Countdown from '../components/Countdown';
 import City from '../components/City';
+import { useNavigate } from 'react-router';
 
 const GamePage = (): JSX.Element => {
   const [cityValue, setCityValue] = useState<string>('');
   const [cities, setCities] = useSessionStorage<string[]>('cities', []);
   const [turn, setTurn] = useSessionStorage<'you' | 'opponent'>('turn', 'you');
+  const navigate = useNavigate();
 
   const generateCity = (mentionedCities: string[], lastCity: string): void => {
     const answerTime = getRandomAnswerTime(10000, 121000);
@@ -41,6 +43,16 @@ const GamePage = (): JSX.Element => {
     } else {
       alert(error);
     }
+  };
+
+  const handleFinishGame = (): void => {
+    navigate('/finish', {
+      state: {
+        turn,
+        citiesCount: cities.length,
+        lastCity: cities.slice(-1)[0],
+      },
+    });
   };
 
   const firstCity = (
@@ -83,8 +95,7 @@ const GamePage = (): JSX.Element => {
       <Countdown
         heading={heading}
         turn={turn}
-        citiesCount={cities.length}
-        lastCity={cities.slice(-1)[0]}
+        handleFinishGame={handleFinishGame}
       />
 
       {!cities.length ? firstCity : listOfCities}
